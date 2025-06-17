@@ -1,13 +1,6 @@
 # Ignoră fișiere mari și salvări de modele
-model/
-*.pth
-*.pt
-*.ckpt
 
 # Ignoră fișiere temporare
-__pycache__/
-*.pyc
 
 # Ignoră loguri TensorBoard
-logs/
-*.log
+
