@@ -1,0 +1,29 @@
+import os
+import librosa
+
+# Path-ul de bază (modifică cu calea ta)
+base_dir = r"F:\LICENTA2025\BachelorWorkspace\dataset\cv-corpus-21.0-2025-03-14-ro.tar\cv-corpus-21.0-2025-03-14-ro\cv-corpus-21.0-2025-03-14\ro\RO_VCTK\wavs_train\SPK18_female_rss_ro"
+
+# Colectăm toate fișierele .wav din subfoldere
+wav_files = []
+for root, _, files in os.walk(base_dir):
+    for file in files:
+        if file.endswith(".wav"):
+            wav_files.append(os.path.join(root, file))
+
+# Verificăm sample rate-ul
+not_16k = []
+for wav_path in wav_files:
+    try:
+        _, sr = librosa.load(wav_path, sr=None)
+        if sr != 16000:
+            not_16k.append((wav_path, sr))
+    except Exception as e:
+        print(f"Eroare la {wav_path}: {str(e)}")
+
+if not_16k:
+    print("Fisiere cu sample rate diferit de 16kHz:")
+    for path, sr in not_16k:
+        print(f"{path} -> {sr} Hz")
+else:
+    print("Toate fisierele sunt la 16kHz.")

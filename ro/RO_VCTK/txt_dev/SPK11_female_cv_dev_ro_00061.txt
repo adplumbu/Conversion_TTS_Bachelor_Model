@@ -1,0 +1,1 @@
+Este modul în care funcţionează extrema dreaptă.

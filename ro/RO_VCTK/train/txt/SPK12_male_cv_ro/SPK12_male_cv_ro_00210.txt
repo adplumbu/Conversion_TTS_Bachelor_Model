@@ -1,0 +1,1 @@
+Dacă nu este inversat, lista rămâne aceeaşi.
