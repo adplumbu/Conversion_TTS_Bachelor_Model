@@ -1,9 +1,8 @@
-import os
-import librosa
-# La începutul scriptului
 import sys
 import io
 import multiprocessing
+import librosa
+import os
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 from trainer import Trainer, TrainerArgs
@@ -21,14 +20,14 @@ from TTS.utils.audio import AudioProcessor
 # Mută tot codul principal într-o funcție
 def main():
     # output_path = os.path.dirname(os.path.abspath(__file__))
-    output_path=r"F:\LICENTA2025\BachelorWorkspace\tts_vits_romanian\model"
+    output_path=r"/root/Conversion_TTS_Bachelor_Model/model"
     dataset_config = BaseDatasetConfig(
         formatter="vctk",
         language="ro",
         meta_file_train="metadata_final.txt",
         #meta_file_val="dev.csv",
-    
-    path=r"F:\LICENTA2025\BachelorWorkspace\tts_vits_romanian\ro\RO_VCTK\train"
+
+    path=r"/root/Conversion_TTS_Bachelor_Model/ro/RO_VCTK/train"
     )
 
     audio_config = VitsAudioConfig(
@@ -46,7 +45,7 @@ def main():
         model_args=vits_args,
         audio=audio_config,
         model= "vits",
-        run_name="vits_romanian_full_ds_run",
+        run_name="vits_romanian_full_ds_run_characters",
         project_name="VITS Romanian Training CV-RSS",
         run_description="""
             - Training of VITS model in Romanian using Common Voice and Romanian Speech Synthesis Corpusesbatch_size
@@ -58,7 +57,7 @@ def main():
         batch_group_size=64,
         num_loader_workers=4,
         num_eval_loader_workers=4,
-        epochs=500,
+        epochs=320,
         print_step=50,
         plot_step=100,
         save_step=5000,
@@ -68,10 +67,10 @@ def main():
         run_eval=True,
         test_delay_epochs=-1,
         text_cleaner="multilingual_cleaners",
-        use_phonemes=True,
-        phonemizer="espeak",
-        phoneme_language="ro",
-        phoneme_cache_path=r"F:\LICENTA2025\BachelorWorkspace\tts_vits_romanian\ds_phonemes",
+        use_phonemes=False,
+        phonemizer="",
+        phoneme_language="",
+        phoneme_cache_path=r"/root/Conversion_TTS_Bachelor_Model/ds_phonemes",
         compute_input_seq_cache=True,
         print_eval=True,
         mixed_precision=True,
@@ -80,48 +79,48 @@ def main():
         cudnn_benchmark=True,
         characters=CharactersConfig(
     characters_class="TTS.tts.models.vits.VitsCharacters",
-        pad="_",
-        eos="&",
-        bos="*",
-        blank=None,
-        characters="",
-        punctuations= "'?!.,",
-        phonemes= "",
+        pad= "<PAD>",
+        eos= "<EOS>",
+        bos= "<BOS>",
+        blank= "<BLNK>",
+        characters="AĂÂBCDEFGHIÎJLMNOPRSȘTȚUVWXZaăâbcdefghiîjlmnoprsștțuvwxz",
+        punctuations= "'?!., ",
+        phonemes= "  !',.?abcdefghijklmnopqrstuvwxyzçəɨɪʃʊʒʲˈˌɔɾɡŋ",
         is_unique=True,
         is_sorted=True,
         ),
         test_sentences=[
-        [
-            "Mica afacere a tatălui meu rămâne mică.",
-            "SPK01_male_cv_ro",
-            None,
-            "ro",
-        ],
-        [
-            "Planificăm, de asemenea, să urmăm o abordare paralelă.",
-            "SPK08_female_cv_ro",
-            None,
-            "ro",
-        ],
-        [
-            "Acum, negociază pentru achiziționarea unei a doua mori, afacerile luând amploare.",
-            "SPK15_male_cv_ro",
-            None,
-            "ro",
-        ],
-        [
-            "Astăzi nu mai putem schimba acest fapt.",
-            "VCTK_SPK18_female_rss_ro",
-            None,
-            "ro",
-        ],
-        [
-            "Nu este o rușine să copiezi.",
-            "SPK17_male_cv_ro",
-            None,
-            "ro",
-        ]
-        ]
+    [
+        "Mica afacere a tatălui meu rămâne mică.",
+        "VCTK_SPK01_male_cv_ro",
+        None,
+        "ro",
+    ],
+    [
+        "Planificăm, de asemenea, să urmăm o abordare paralelă.",
+        "VCTK_SPK08_female_cv_ro",
+        None,
+        "ro",
+    ],
+    [
+        "Acum, negociază pentru achiziționarea unei a doua mori, afacerile luând amploare.",
+        "VCTK_SPK15_male_cv_ro",
+        None,
+        "ro",
+    ],
+    [
+        "Astăzi nu mai putem schimba acest fapt.",
+        "VCTK_SPK18_female_rss_ro",
+        None,
+        "ro",
+    ],
+    [
+        "Nu este o rușine să copiezi.",
+        "VCTK_SPK17_male_cv_ro",
+        None,
+        "ro",
+    ]
+]
     )
 
     ap = AudioProcessor.init_from_config(config)
@@ -173,7 +172,7 @@ def main():
 
     # Verifică primele 3 transcripturi
     for i, sample in enumerate(train_samples[:3]):
-        
+
             print(f"Transcript {i+1}: {sample['text']}")
 
     # pretrained_checkpoint = "path/catre/modelul_preantrenat.pth"
@@ -184,7 +183,7 @@ def main():
 
 
     trainer = Trainer(
-        TrainerArgs(gpu=None),
+        TrainerArgs(gpu=0),
         config,
         output_path,
         model=model,
