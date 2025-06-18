@@ -1,104 +1,117 @@
+# import os
+# import sys
+# from TTS.utils.synthesizer import Synthesizer
+
+# # Setează codificarea corectă pentru consolă și I/O
+# if sys.stdout.encoding != 'utf-8':
+#     sys.stdout.reconfigure(encoding='utf-8')
+
+# # === CONFIG ===
+# MODEL_PATH = "/root/Conversion_TTS_Bachelor_Model/model/vits_romanian_full_ds_run-June-17-2025_08+17PM-58125cf9/best_model.pth"
+# CONFIG_PATH = "/root/Conversion_TTS_Bachelor_Model/model/vits_romanian_full_ds_run-June-17-2025_08+17PM-58125cf9/config.json"
+# OUTPUT_PATH_WAV = "/root/Conversion_TTS_Bachelor_Model/synth_output/audio"
+# OUTPUT_PATH_TEXT = "/root/Conversion_TTS_Bachelor_Model/synth_output/transcripts"
+# SPEAKER_NAME = "VCTK_SPK01_male_cv_ro"  # <<--- modifică aici speaker-ul dorit
+
+# # Creează directoarele dacă nu există
+# os.makedirs(OUTPUT_PATH_WAV, exist_ok=True)
+# os.makedirs(OUTPUT_PATH_TEXT, exist_ok=True)
+
+# # Inițializează sintetizatorul
+# synthesizer = Synthesizer(
+#     model_path=MODEL_PATH,
+#     config_path=CONFIG_PATH,
+#     speakers_file_path=None,
+#     use_cuda=True  # Setează True pentru GPU
+# )
+
+# # === TEXTE DE TESTAT ===
+# test_texts = [
+#     "Acum noi vorbim doar din auzite, din ce am citit pe internet.",
+#     "Frâna bruscă a dus la răsturnarea mașinii în afara părţii carosabile.",
+#     "El a adăugat că nu știe exact când se vor termina lucrările."
+# ]
+
+# # Normalizează textul
+
+# def normalize_romanian_text(text):
+#     replacements = {
+#         'ş': 'ș', 'Ş': 'Ș',
+#         'ţ': 'ț', 'Ţ': 'Ț',
+#         '\u0219': 'ș', '\u0218': 'Ș',
+#         '\u021B': 'ț', '\u021A': 'Ț',
+#     }
+#     for old, new in replacements.items():
+#         text = text.replace(old, new)
+#     return text
+
+# # === SINTEZĂ AUDIO ===
+# for i, text in enumerate(test_texts):
+#     normalized_text = normalize_romanian_text(text)
+#     print(f"[INFO] Sintetizez: {normalized_text}")
+
+#     try:
+#         wav = synthesizer.tts(normalized_text, speaker_name=SPEAKER_NAME)
+#         wav_path = os.path.join(OUTPUT_PATH_WAV, f"test_{i+1}.wav")
+#         txt_path = os.path.join(OUTPUT_PATH_TEXT, f"test_{i+1}.txt")
+
+#         synthesizer.save_wav(wav, wav_path)
+#         with open(txt_path, 'w', encoding='utf-8') as f:
+#             f.write(normalized_text)
+
+#         print(f"[SALVAT] {wav_path} & {txt_path}")
+
+#     except Exception as e:
+#         print(f"[EROARE] La textul {i+1}: {e}")
+
+# print("\n[SUCCESS] Sinteza a fost completă!")
+
 import os
 import sys
 from TTS.utils.synthesizer import Synthesizer
 
-# Setează codificarea corectă pentru consolă și I/O
+# Asigură-te că terminalul folosește UTF-8
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-# Calea către modelul antrenat și configurație
-MODEL_PATH = r"F:\LICENTA2025\BachelorWorkspace\modele_antrenate\vits\vits_romanian_extened_ds_testrun-April-12-2025_09+29AM-dbf1a08a\best_model_6624.pth"
-CONFIG_PATH = r"F:\LICENTA2025\BachelorWorkspace\modele_antrenate\vits\vits_romanian_extened_ds_testrun-April-12-2025_09+29AM-dbf1a08a\config.json"
-OUTPUT_PATH_WAV = r"F:\LICENTA2025\BachelorWorkspace\rezultate\Rezultate_antrenare_medie_1300"
-OUTPUT_PATH_TEST_TRANSCRIPT = r"F:\LICENTA2025\BachelorWorkspace\rezultate\Rezultate_antrenare_medie_1300"
+# === Setări principale ===
+MODEL_PATH = r"F:\LICENTA2025\BachelorWorkspace\tts_vits_romanian\model\runpod_training\vits_romanian_full_ds_run-June-17-2025_08+17PM-58125cf9\best_model_31152.pth"
+CONFIG_PATH = r"F:\LICENTA2025\BachelorWorkspace\tts_vits_romanian\model\runpod_training\vits_romanian_full_ds_run-June-17-2025_08+17PM-58125cf9\config.json"
+OUTPUT_PATH_WAV = r"F:\LICENTA2025\BachelorWorkspace\tts_vits_romanian\model\synthesis_output"
+SPEAKER_NAME = "VCTK_SPK01_male_cv_ro"  # înlocuiește cu speakerul dorit
 
-# Asigură-te că directorul de ieșire există
+# Creează folderul de output dacă nu există
 os.makedirs(OUTPUT_PATH_WAV, exist_ok=True)
-os.makedirs(OUTPUT_PATH_TEST_TRANSCRIPT, exist_ok=True)
 
 # Inițializează sintetizatorul
 synthesizer = Synthesizer(
     MODEL_PATH,
     CONFIG_PATH,
-    use_cuda=False  # Setează True dacă ai GPU și vrei să accelerezi procesul
+    use_cuda=False,  # setează pe True dacă rulezi pe GPU
+tts_speakers_file=r"F:\LICENTA2025\BachelorWorkspace\tts_vits_romanian\model\runpod_training\vits_romanian_full_ds_run-June-17-2025_08+17PM-58125cf9\speakers.pth"
 )
 
-test_unknown_data = [
-    'Totuşi, pare să fie atras de lumina reflectoarelor, adăugând că îi place să fie filmat.', #adr_news_011 - 1
-    'Ulterior, a devenit profesor de instrumente tradiţionale, la şcoala populară de artă.', #adr_news_037 - 2
-    'O altă regulă este că trebuie să descrii o scenă din natură.', #adr_news_060 - 3
-    'Din păcate, trecerea timpului şia pus amprenta asupra vestigiului.', #adr_news_061 - 4
-    'Acum noi vorbim doar din auzite, din ce am citit pe internet.', #adr_news_072 - 5
-    'Frâna bruscă a dus la răsturnarea maşinii în afara părţii carosabile.', #adr_news_119 - 6
-    'Dacă am vrea să facem frumos, near costa zeci de milioane.', #adr_news_132 - 7
-    'El a adăugat că nu ştie exact când se vor termina lucrările.', #adr_news_133 - 8
-    'El a făcut trimitere la declaraţiile de protest ale liderilor occidentali.', #adr_news_172 - 9
-    'Le arăt oamenilor cum era viaţa în trecut, în zona noastră.' #adr_news_210 - 10
+# Lista de propoziții de test
+test_sentences = [
+    "Totuşi, pare să fie atras de lumina reflectoarelor.",
+    "Ulterior, a devenit profesor de instrumente tradiţionale.",
+    "O altă regulă este că trebuie să descrii o scenă din natură.",
+    "Frâna bruscă a dus la răsturnarea maşinii.",
+    "Nu prea avea timp pentru el însuși.",
 ]
 
-test_ground_truth = [
-    'Pe data de zece octombrie toate depozitele de gaze pe care le are România vor fi pline ochi.', # adr_diph1_024 - 1
-    'Tirajul lor este simbolic între două mii şi trei mii de exemplare zilnic.', #adr_diph1_029 - 2
-    'Vlad Constantinescu directorul turneului sport arena stritbol.', #adr_diph1_051 - 3
-    'Cei care vor săi admire pe câini vor scoate din buzunar cinci lei.', #adr_diph1_122 - 4
-    'Zilele viitoare vom reveni cu episodul cârtiţa din clanul interlopilor.', #adr_diph1_231 - 5
-    'preţul unui zbor porneşte de la şaptezeci lei', #adr_diph2_104 - 6
-    'Nu prea avea timp pentru el însuși.|nu prea avea timp pentru el însuşi.', #adr_diph2_274 - 7
-    'băsescu spectacol folcloric la academia de poliţie puneţi mâna pe arme.', #adr_diph2_275 - 8
-    'ora doi fără un sfert.', #adr_diph2_276 - 9
-    'Dumnezeu a poruncit ca să mănânci trei ani de zile dea rândul numai pădure bătrână. de cea tânără să nu te atingi. înţelesai. Hai, porneşte şiţi fă datoria.', #adr_ivan_181 - 10
-    'Mam dus la rai, de la rai la iad, şi de la iad iar la rai.', #adr_ivan_249 - 11
-    'în sfârşit, mai stă el Ivan oleacă aşa, cu fruntea rezemată pe mână, şii şi trăsneşte în gând una.', #adr_ivan_253 - 12
-    'Taci. Că iam dat de meşteşug.' #adr_ivan_254 - 13
-]
-
-# Funcție pentru a normaliza textul românesc
-def normalize_romanian_text(text):
-    # Asigură-te că toate diacriticele sunt în format corect
-    replacements = {
-        'ş': 'ș', 'Ş': 'Ș',  # s cu sedilă -> s cu virgulă
-        'ţ': 'ț', 'Ţ': 'Ț',  # t cu sedilă -> t cu virgulă
-        '\u0219': 'ș', '\u0218': 'Ș',  # alte coduri pentru s cu virgulă
-        '\u021B': 'ț', '\u021A': 'Ț',  # alte coduri pentru t cu virgulă
-    }
-    
-    for old, new in replacements.items():
-        text = text.replace(old, new)
-    
-    return text
-
-# Generează și salvează audio pentru fiecare propoziție
-for i, text in enumerate(test_ground_truth):
-    # Normalizează textul
-    normalized_text = normalize_romanian_text(text)
-    
+# Generează audio pentru fiecare propoziție
+for i, text in enumerate(test_sentences, start=1):
     try:
-        print(f"Generez audio pentru: {normalized_text}")
-        
-        # Generează audio
-        outputs = synthesizer.tts(normalized_text)
-        
-        # Crează numele fișierului de ieșire pentru audio
-        file_name = f"test_output_{i+1}.wav"
-        file_path = os.path.join(OUTPUT_PATH_WAV, file_name)
-        
-        # Salvează audio în fișier
-        synthesizer.save_wav(outputs, file_path)
-        print(f"Audio salvat la: {file_path}")
-        
-        # Generează și salvează fișierul text corespunzător
-        txt_file_name = f"test_output_{i+1}.txt"
-        txt_file_path = os.path.join(OUTPUT_PATH_TEST_TRANSCRIPT, txt_file_name)
-        
-        # Scrie textul în fișier cu codificare UTF-8
-        with open(txt_file_path, 'w', encoding='utf-8') as f:
-            f.write(normalized_text)
-        
-        print(f"Text salvat la: {txt_file_path}")
-    
-    except Exception as e:
-        print(f"Eroare la procesarea textului: '{normalized_text}'")
-        print(f"Detalii eroare: {str(e)}")
-        continue  # Continuă cu următoarea propoziție în caz de eroare
+        print(f"[{i}] Sintetizez: {text}")
+        outputs = synthesizer.tts(text, speaker_name=SPEAKER_NAME)
 
-print("Procesul de sintetizare a fost finalizat cu succes!")
+        wav_path = os.path.join(OUTPUT_PATH_WAV, f"test_output_{i}.wav")
+        synthesizer.save_wav(outputs, wav_path)
+        print(f"    -> Audio salvat la: {wav_path}")
+
+    except Exception as e:
+        print(f"    [Eroare] {e}")
+        continue
+
+print("Proces de sintetizare finalizat.")
