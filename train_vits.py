@@ -85,7 +85,7 @@ def main():
         blank= "<BLNK>",
         characters="AĂÂBCDEFGHIÎJLMNOPRSȘTȚUVWXZaăâbcdefghiîjlmnoprsștțuvwxz",
         punctuations= "'?!., ",
-        phonemes= "  !',.?abcdefghijklmnopqrstuvwxyzçəɨɪʃʊʒʲˈˌɔɾɡŋ",
+        phonemes= "abcdefghijklmnopqrstuvwxyzçəɨɪʃʊʒʲˈˌɔɾɡŋ",
         is_unique=True,
         is_sorted=True,
         ),
