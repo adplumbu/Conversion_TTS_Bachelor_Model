@@ -25,6 +25,12 @@ def main():
         formatter="vctk",
         language="ro",
         meta_file_train="metadata_final_fixed.csv",
+        ignored_speakers=[
+            "VCTK_SPK01_male_cv_ro",
+            "VCTK_SPK06_male_cv_ro",
+            "VCTK_SPK16_female_cv_ro"
+        ],
+        
         #meta_file_val="dev.csv",
 
     path=r"/root/Conversion_TTS_Bachelor_Model/ro/RO_VCTK/train"
@@ -83,9 +89,9 @@ def main():
         eos= "<EOS>",
         bos= "<BOS>",
         blank= "<BLNK>",
-        characters="AĂÂBCDEFGHIÎJLMNOPRSȘTȚUVWXZaăâbcdefghiîjlmnoprsștțuvwxz",
+        characters="AĂÂBCDEFGHIÎJLMNOPRSȘTȚUVWXZaăâbcdefghiîjlmnoprsșştțţuvwxz",
         punctuations= "'?!., ",
-        phonemes= "abcdefghijklmnopqrstuvwxyzçəɨɪʃʊʒʲˈˌɔɾɡŋ",
+        phonemes= "",
         is_unique=True,
         is_sorted=True,
         ),

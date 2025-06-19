@@ -1,1 +1,0 @@
- În cazul neconfirmării la timp al locului obținut, locurile neocupate vor fi redistribuite.
