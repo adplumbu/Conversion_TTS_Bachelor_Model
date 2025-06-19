@@ -1,0 +1,1 @@
+Practicile care denaturează concurența trebuie oprite.
