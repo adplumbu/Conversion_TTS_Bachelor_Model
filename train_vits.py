@@ -24,7 +24,7 @@ def main():
     dataset_config = BaseDatasetConfig(
         formatter="vctk",
         language="ro",
-        meta_file_train="metadata_final_fixed.csv",
+        meta_file_train="metadata_final_fixed.txt",
         ignored_speakers=[
             "VCTK_SPK01_male_cv_ro",
             "VCTK_SPK06_male_cv_ro",
@@ -89,7 +89,7 @@ def main():
         eos= "<EOS>",
         bos= "<BOS>",
         blank= "<BLNK>",
-        characters="AĂÂBCDEFGHIÎJKLMNOPQRSȘTȚUVWXYZaăâbcdefghiîjklmnopqrsșştțţuvwxyzüá",
+        characters="AĂÂBCDEFGHIÎJKLMNOPQRSȘTȚUVWXYZaăâbcdefghiîjklmnopqrsștțuvwxyz",
         punctuations= '"\'?!., ',
         phonemes= "",
         is_unique=True,
