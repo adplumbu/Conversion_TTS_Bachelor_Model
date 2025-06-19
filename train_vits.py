@@ -24,7 +24,7 @@ def main():
     dataset_config = BaseDatasetConfig(
         formatter="vctk",
         language="ro",
-        meta_file_train="metadata_final.txt",
+        meta_file_train="metadata_final_fixed.csv",
         #meta_file_val="dev.csv",
 
     path=r"/root/Conversion_TTS_Bachelor_Model/ro/RO_VCTK/train"
@@ -57,7 +57,7 @@ def main():
         batch_group_size=64,
         num_loader_workers=4,
         num_eval_loader_workers=4,
-        epochs=320,
+        epochs=350,
         print_step=50,
         plot_step=100,
         save_step=5000,
@@ -68,8 +68,8 @@ def main():
         test_delay_epochs=-1,
         text_cleaner="multilingual_cleaners",
         use_phonemes=False,
-        phonemizer="",
-        phoneme_language="",
+        phonemizer="espeak",
+        phoneme_language="ro",
         phoneme_cache_path=r"/root/Conversion_TTS_Bachelor_Model/ds_phonemes",
         compute_input_seq_cache=True,
         print_eval=True,
