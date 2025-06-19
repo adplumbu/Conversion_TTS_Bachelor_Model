@@ -89,7 +89,7 @@ def main():
         eos= "<EOS>",
         bos= "<BOS>",
         blank= "<BLNK>",
-        characters="AĂÂBCDEFGHIÎJKLMNOPQRSȘTȚUVWXYZaăâbcdefghiîjklmnopqrsștțuvwxyz",
+        characters="AĂÂBCDEFGHIÎJKLMNOPQRSȘTȚUVWXYZaăâbcdefghiîjklmnopqrsșştțţuvwxyzüá",
         punctuations= '"\'?!., ',
         phonemes= "",
         is_unique=True,
